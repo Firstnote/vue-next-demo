@@ -1,7 +1,8 @@
 <template>
   <div>
     <h2>{{title}}</h2>
-    <h2>{{userName}}</h2>
+    <h2>{{$attrs.userName}}</h2>
+    <child v-bind="$props"></child>
     <div v-for="(item,index) in state.arr" :key="item" @click="change(index)">{{item}}</div>
   </div>
 </template>
@@ -20,12 +21,18 @@ import {
   ref,
   reactive
 } from "vue";
-
+import child from "./child";
 export default {
+  components: {
+    child
+  },
   props: {
     userName: {
       type: String
     }
+    // url: {
+    //   required: false
+    // }
   },
   setup(props, context) {
     const title = ref("demo");
@@ -59,7 +66,7 @@ export default {
       console.log("props", props);
     });
     onBeforeMount(() => {
-      console.log("context", context);
+      console.log("context", context.attrs.url);
     });
     onMounted(() => {});
 
