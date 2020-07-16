@@ -3,7 +3,8 @@
     <h2>{{title}}</h2>
     <h2>{{$attrs.userName}}</h2>
     <child v-bind="$props"></child>
-    <div v-for="(item,index) in state.arr" :key="item" @click="change(index)">{{item}}</div>
+    <div v-for="(item,index) in arr" :key="item" @click="change(index,arr)">{{item}}</div>
+    <div v-for="(item,index) in state.arr" :key="item" @click="change(index,state.arr)">{{item}}</div>
   </div>
 </template>
 
@@ -19,7 +20,8 @@ import {
   // onRenderTracked,
   // onRenderTriggered,
   ref,
-  reactive
+  reactive,
+  toRefs
 } from "vue";
 import child from "./child";
 export default {
@@ -53,13 +55,12 @@ export default {
         }
       ]
     });
-    const change = index => {
+    const change = (index, arr) => {
       // console.log(index);
       // state.arr[index] = 20;
       // state.arr.splice
       // state.arr[index]++;
-      state.arr[index].name =
-        state.arr[index].name === "xiaohui" ? "xiaoqiao" : "xiaohui";
+      arr[index].name = arr[index].name === "xiaohui" ? "xiaoqiao" : "xiaohui";
     };
     onMounted(() => {
       title.value = "sss";
@@ -73,7 +74,8 @@ export default {
     return {
       title,
       state,
-      change
+      change,
+      ...toRefs(state) //属性指针不变
     };
   }
 };
