@@ -67,7 +67,7 @@ export default {
       console.log("props", props);
     });
     onBeforeMount(() => {
-      console.log("context", context.attrs.url);
+      console.log("context", context);
     });
     onMounted(() => {});
 
